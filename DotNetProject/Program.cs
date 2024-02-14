@@ -1,3 +1,6 @@
+using DataAceessLayer.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace DotNetProject
 {
     public class Program
@@ -8,6 +11,8 @@ namespace DotNetProject
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddDbContext<AppDbContext>(op => op.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConn")));
 
             var app = builder.Build();
 
