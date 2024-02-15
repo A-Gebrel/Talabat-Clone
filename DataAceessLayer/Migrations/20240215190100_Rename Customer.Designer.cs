@@ -4,6 +4,7 @@ using DataAceessLayer.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAceessLayer.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240215190100_Rename Customer")]
+    partial class RenameCustomer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,9 +51,6 @@ namespace DataAceessLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CartID")
-                        .HasColumnType("int");
-
                     b.Property<string>("ContactNo")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -66,51 +65,6 @@ namespace DataAceessLayer.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("ApplicationUser");
-                });
-
-            modelBuilder.Entity("Models.Cart", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
-
-                    b.Property<int>("ApplicationUserID")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("ApplicationUserID")
-                        .IsUnique();
-
-                    b.ToTable("Carts");
-                });
-
-            modelBuilder.Entity("Models.CartProduct", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
-
-                    b.Property<int?>("CartID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("CartID");
-
-                    b.HasIndex("ProductID");
-
-                    b.ToTable("CartProduct");
                 });
 
             modelBuilder.Entity("Models.Category", b =>
@@ -248,47 +202,6 @@ namespace DataAceessLayer.Migrations
                     b.ToTable("Restaurant");
                 });
 
-            modelBuilder.Entity("Models.WishedItem", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
-
-                    b.Property<int>("ProductID")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("WishlistID")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("ProductID");
-
-                    b.HasIndex("WishlistID");
-
-                    b.ToTable("WishedItem");
-                });
-
-            modelBuilder.Entity("Models.Wishlist", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
-
-                    b.Property<int>("ApplicationUserID")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("ApplicationUserID");
-
-                    b.ToTable("Wishlists");
-                });
-
             modelBuilder.Entity("CategoryRestaurant", b =>
                 {
                     b.HasOne("Models.Category", null)
@@ -302,32 +215,6 @@ namespace DataAceessLayer.Migrations
                         .HasForeignKey("RestaurantsID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Models.Cart", b =>
-                {
-                    b.HasOne("Models.ApplicationUser", "ApplicationUser")
-                        .WithOne("Cart")
-                        .HasForeignKey("Models.Cart", "ApplicationUserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ApplicationUser");
-                });
-
-            modelBuilder.Entity("Models.CartProduct", b =>
-                {
-                    b.HasOne("Models.Cart", null)
-                        .WithMany("Products")
-                        .HasForeignKey("CartID");
-
-                    b.HasOne("Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Models.Order", b =>
@@ -371,42 +258,6 @@ namespace DataAceessLayer.Migrations
                     b.Navigation("Restaurant");
                 });
 
-            modelBuilder.Entity("Models.WishedItem", b =>
-                {
-                    b.HasOne("Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Models.Wishlist", null)
-                        .WithMany("WishedProducts")
-                        .HasForeignKey("WishlistID");
-
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("Models.Wishlist", b =>
-                {
-                    b.HasOne("Models.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("ApplicationUserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ApplicationUser");
-                });
-
-            modelBuilder.Entity("Models.ApplicationUser", b =>
-                {
-                    b.Navigation("Cart");
-                });
-
-            modelBuilder.Entity("Models.Cart", b =>
-                {
-                    b.Navigation("Products");
-                });
-
             modelBuilder.Entity("Models.Order", b =>
                 {
                     b.Navigation("OrderProducts");
@@ -420,11 +271,6 @@ namespace DataAceessLayer.Migrations
             modelBuilder.Entity("Models.Restaurant", b =>
                 {
                     b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("Models.Wishlist", b =>
-                {
-                    b.Navigation("WishedProducts");
                 });
 #pragma warning restore 612, 618
         }

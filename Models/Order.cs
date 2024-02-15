@@ -16,10 +16,10 @@ namespace Models
         public double TotalPrice { get; set; }
         [Required]
         public PaymentMethod PaymentMethod { get; set; }
-        public int CustomerID { get; set; }
+        public int ApplicationUserID { get; set; }
         public virtual List<Product>? Products { get; }
         public virtual List<OrderProduct>? OrderProducts { get; }
-        public Customer Customer { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
 
 
     }

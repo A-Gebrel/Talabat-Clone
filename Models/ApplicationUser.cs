@@ -14,8 +14,8 @@ namespace Models
         Female
     }
 
-    [Table("Customers")]
-    public class Customer
+    [Table("ApplicationUser")]
+    public class ApplicationUser
     {
         [Key]
         public int ID {  get; set; }
@@ -26,10 +26,12 @@ namespace Models
         [Required]
         public string ContactNo {  get; set; }
         public string Address { get; set; }
+        
+        public int CartID {  get; set; }
+        public virtual Cart? Cart {  get; set; }
 
         //public virtual List<Order>? Orders { get; set; }
         //public virtual List<Product>? Wishlist { get; set; }
-        //public virtual List<Product>? Cart { get; set; }
 
     }
 }
