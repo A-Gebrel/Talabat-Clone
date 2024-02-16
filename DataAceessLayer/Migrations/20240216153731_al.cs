@@ -4,7 +4,7 @@
 
 namespace DataAceessLayer.Migrations
 {
-    public partial class InitialDBDesign : Migration
+    public partial class al : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

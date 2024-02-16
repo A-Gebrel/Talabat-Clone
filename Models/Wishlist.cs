@@ -9,7 +9,7 @@ namespace Models
     public class Wishlist
     {
         public int ID { get; set; }
-        public int ApplicationUserID { get; set; }
+        public string ApplicationUserID { get; set; }
 
         public List<WishedItem> WishedProducts { get; set; }
 

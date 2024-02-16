@@ -14,7 +14,7 @@ namespace Models
         public int ID { get; set; }
 
         [ForeignKey("ApplicationUser")]
-        public int ApplicationUserID { get; set; }
+        public string ApplicationUserID { get; set; }
         public List<CartProduct> Products { get; set; }
         public virtual ApplicationUser ApplicationUser { get; set; }
     }

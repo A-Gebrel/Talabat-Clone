@@ -1,16 +1,24 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Models;
 using System.Diagnostics;
 
-namespace DotNetProject.Controllers
+namespace DotNetProject.Areas.Customer.Controllers
 {
+    [Area("Customer")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly UserManager<IdentityUser> userManager;
+        private readonly SignInManager<IdentityUser> signInMAnager;
+        public HomeController(ILogger<HomeController> logger,
+            UserManager<IdentityUser> _UserManager,
+            SignInManager<IdentityUser> _SignInMAnager)
         {
             _logger = logger;
+            userManager = _UserManager;
+            signInMAnager = _SignInMAnager;
         }
 
         public IActionResult Index()
